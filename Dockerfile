@@ -19,7 +19,7 @@ RUN npm run build
 
 RUN echo "=== BUILD OUTPUT ===" \
     && find /app/dist -maxdepth 3 -type f -print \
-    && test -f /app/dist/main.js
+    && test -f /app/dist/src/main.js
 
 ENV NODE_ENV=production
 
