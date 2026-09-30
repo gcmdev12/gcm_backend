@@ -15,7 +15,6 @@ COPY prisma ./prisma
 COPY prisma.config.ts ./prisma.config.ts
 COPY nest-cli.json tsconfig.json ./
 COPY src ./src
-COPY .env.example ./.env.example
 
 RUN npm run build
 
