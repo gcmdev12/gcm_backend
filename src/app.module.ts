@@ -20,7 +20,7 @@ import { HealthController } from './health.controller';
       sortSchema: true,
       introspection: process.env.NODE_ENV !== 'production',
       graphiql: process.env.NODE_ENV !== 'production',
-      context: ({ req }) => ({ req }),
+      context: ({ req }: { req: any }) => ({ req }),
     }),
     PrismaModule,
     AuthModule,
