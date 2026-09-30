@@ -5,8 +5,10 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "node dist/main.js",
-    "preDeployCommand": ["npm run prisma:deploy"],
+    "preDeployCommand": [
+      "npm run prisma:deploy"
+    ],
+    "startCommand": "npm run start:prod",
     "healthcheckPath": "/api/health",
     "healthcheckTimeout": 120,
     "restartPolicyType": "ON_FAILURE",

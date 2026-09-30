@@ -17,8 +17,9 @@ COPY src ./src
 
 RUN npm run build
 
-# Fail the image build if Nest did not produce the expected entry point.
-RUN test -f /app/dist/main.js
+RUN echo "=== BUILD OUTPUT ===" \
+    && find /app/dist -maxdepth 3 -type f -print \
+    && test -f /app/dist/main.js
 
 ENV NODE_ENV=production
 
