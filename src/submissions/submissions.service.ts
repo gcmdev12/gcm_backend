@@ -10,13 +10,13 @@ export class SubmissionsService {
 
   async createContact(input: ContactSubmissionInput) {
     const record = await this.prisma.contactSubmission.create({ data: input });
-    void this.email.notify('CONTACT', `New Contact Submission: ${input.subject || input.name}`, this.email.contactHtml(input), input.email);
+    await this.email.notify('CONTACT', `New Contact Submission: ${input.subject || input.name}`, this.email.contactHtml(input), input.email);
     return record;
   }
 
   async createVolunteer(input: VolunteerSubmissionInput) {
     const record = await this.prisma.volunteerSubmission.create({ data: input });
-    void this.email.notify('VOLUNTEER', `New Volunteer Application: ${input.name}`, this.email.volunteerHtml(input), input.email);
+    await this.email.notify('VOLUNTEER', `New Volunteer Application: ${input.name}`, this.email.volunteerHtml(input), input.email);
     return record;
   }
 
@@ -27,7 +27,7 @@ export class SubmissionsService {
       update: { name: input.name, status: SubmissionStatus.NEW },
       create: { email, name: input.name },
     });
-    void this.email.notify('NEWSLETTER', `New Newsletter Subscriber: ${email}`, this.email.newsletterHtml({ ...input, email }), email);
+    await this.email.notify('NEWSLETTER', `New Newsletter Subscriber: ${email}`, this.email.newsletterHtml({ ...input, email }), email);
     return record;
   }
 
