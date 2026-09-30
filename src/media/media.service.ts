@@ -63,11 +63,17 @@ export class MediaService {
     const branch = process.env.GITHUB_BRANCH ?? 'main';
     if (!token) throw new InternalServerErrorException('Image storage is not configured on the server.');
     if (!path || !path.startsWith('public/images/uploads/')) throw new BadRequestException('Only uploaded website images can be deleted.');
-    if (!sha) throw new BadRequestException('The image revision SHA is required.');
+    let revisionSha = sha;
+    if (!revisionSha) {
+      const lookup = await fetch(`https://api.github.com/repos/${repository}/contents/${path}?ref=${branch}`, { headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', 'User-Agent': 'glory-children-ministry-backend' } });
+      const lookupPayload = await lookup.json() as { sha?: string; message?: string };
+      if (!lookup.ok || !lookupPayload.sha) throw new BadRequestException(lookupPayload.message || 'Could not find the uploaded image on GitHub.');
+      revisionSha = lookupPayload.sha;
+    }
     const response = await fetch(`https://api.github.com/repos/${repository}/contents/${path}`, {
       method: 'DELETE',
       headers: { Accept: 'application/vnd.github+json', Authorization: `Bearer ${token}`, 'X-GitHub-Api-Version': '2022-11-28', 'Content-Type': 'application/json', 'User-Agent': 'glory-children-ministry-backend' },
-      body: JSON.stringify({ message: `Delete uploaded website image: ${path.split('/').pop()}`, sha, branch }),
+      body: JSON.stringify({ message: `Delete uploaded website image: ${path.split('/').pop()}`, revisionSha, branch }),
     });
     const payload = await response.json() as { message?: string; commit?: { sha?: string } };
     if (!response.ok) throw new InternalServerErrorException(payload.message || 'GitHub image deletion failed.');
