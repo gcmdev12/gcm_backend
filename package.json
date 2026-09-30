@@ -4,7 +4,7 @@
   "private": true,
   "description": "Backend API for Glory Children Ministry website and admin dashboard",
   "scripts": {
-    "build": "prisma generate --schema=./prisma/schema.prisma && nest build",
+     "build": "prisma generate --schema=./prisma/schema.prisma && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
