@@ -1,5 +1,5 @@
 import { Field, InputType, Int, ObjectType, registerEnumType } from '@nestjs/graphql';
-import { IsEmail, IsInt, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsEnum, IsInt, IsOptional, IsString, MaxLength, MinLength } from 'class-validator';
 import { SubmissionStatus } from '../generated/prisma/enums';
 
 registerEnumType(SubmissionStatus, { name: 'SubmissionStatus' });
@@ -33,7 +33,7 @@ export class NewsletterInput {
 
 @InputType()
 export class SubmissionStatusInput {
-  @Field(() => SubmissionStatus) status!: SubmissionStatus;
+  @Field(() => SubmissionStatus) @IsEnum(SubmissionStatus) status!: SubmissionStatus;
 }
 
 @ObjectType()
