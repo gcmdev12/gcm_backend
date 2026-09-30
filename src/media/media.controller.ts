@@ -1,4 +1,4 @@
-import { BadRequestException, Controller, Post, Req, UploadedFile, UseGuards, UseInterceptors } from '@nestjs/common';
+import { BadRequestException, Controller, Post, Req, UploadedFile, UseInterceptors, UnauthorizedException } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
@@ -14,16 +14,16 @@ export class MediaController {
   async upload(@UploadedFile() file: any, @Req() req: Request) {
     const header = req.headers.authorization;
     const token = typeof header === 'string' && header.startsWith('Bearer ') ? header.slice(7) : undefined;
-    if (!token) throw new BadRequestException('Authentication required.');
+    if (!token) throw new UnauthorizedException('Authentication required.');
 
     let user: AuthUser;
     try {
       user = this.jwt.verify<AuthUser>(token);
     } catch {
-      throw new BadRequestException('Invalid or expired admin session.');
+      throw new UnauthorizedException('Invalid or expired admin session.');
     }
     if (!user?.sub || !['ADMIN', 'SUPER_ADMIN'].includes(user.role)) {
-      throw new BadRequestException('Administrator access required.');
+      throw new UnauthorizedException('Administrator access required.');
     }
 
     const folder = typeof req.body?.folder === 'string' ? req.body.folder : 'uploads';
