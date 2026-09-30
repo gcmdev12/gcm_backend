@@ -3,23 +3,24 @@
   "version": "1.0.0",
   "private": true,
   "description": "Backend API for Glory Children Ministry website and admin dashboard",
- "scripts": {
-  "build": "prisma generate --schema=./prisma/schema.prisma && nest build",
-  "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
-  "start": "nest start",
-  "start:dev": "nest start --watch",
-  "start:debug": "nest start --debug --watch",
-  "start:prod": "node dist/src/main.js",
-  "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
-  "prisma:migrate": "prisma migrate dev --schema=./prisma/schema.prisma",
-  "prisma:deploy": "prisma migrate deploy --schema=./prisma/schema.prisma",
-  "prisma:seed": "prisma db seed --schema=./prisma/schema.prisma",
-  "prisma:studio": "prisma studio --schema=./prisma/schema.prisma",
-  "db:reset": "prisma migrate reset --schema=./prisma/schema.prisma",
-  "lint": "eslint \"{src,prisma}/**/*.ts\""
-},
+  "scripts": {
+    "build": "prisma generate --schema=./prisma/schema.prisma && nest build",
+    "format": "prettier --write \"src/**/*.ts\" \"prisma/**/*.ts\"",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:debug": "nest start --debug --watch",
+    "start:prod": "node dist/src/main.js",
+    "prisma:generate": "prisma generate --schema=./prisma/schema.prisma",
+    "prisma:migrate": "prisma migrate dev --schema=./prisma/schema.prisma",
+    "prisma:deploy": "prisma migrate deploy --schema=./prisma/schema.prisma",
+    "prisma:seed": "prisma db seed --schema=./prisma/schema.prisma",
+    "prisma:studio": "prisma studio --schema=./prisma/schema.prisma",
+    "db:reset": "prisma migrate reset --schema=./prisma/schema.prisma",
+    "lint": "eslint \"{src,prisma}/**/*.ts\""
+  },
   "dependencies": {
     "@apollo/server": "5.0.0",
+    "@as-integrations/express5": "^1.1.2",
     "@nestjs/apollo": "13.4.5",
     "@nestjs/common": "11.2.6",
     "@nestjs/config": "4.0.4",
@@ -34,10 +35,10 @@
     "class-validator": "^0.14.2",
     "graphql": "^16.11.0",
     "pg": "^8.16.3",
+    "prisma": "7.10.0",
     "reflect-metadata": "^0.2.2",
     "resend": "^6.30.0",
-    "rxjs": "^7.8.2",
-    "prisma": "7.10.0"
+    "rxjs": "^7.8.2"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",
