@@ -16,7 +16,7 @@ export class EmailService {
   }
 
   async notify(type: string, subject: string, html: string, replyTo?: string) {
-    const recipient = 'gcmdev12@gmail.com';
+    const recipient = 'glorychildrenministries@gmail.com';
     const from = process.env.RESEND_FROM ?? 'Glory Children Ministry <notifications@glorychildrenministry.org>';
 
     if (!this.resend) {
