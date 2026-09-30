@@ -9,6 +9,7 @@ import { SubmissionsModule } from './submissions/submissions.module';
 import { ContentModule } from './content/content.module';
 import { SettingsModule } from './settings/settings.module';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { MediaModule } from './media/media.module';
 import { HealthController } from './health.controller';
 
 @Module({
@@ -29,6 +30,7 @@ import { HealthController } from './health.controller';
     ContentModule,
     SettingsModule,
     DashboardModule,
+    MediaModule,
   ],
   controllers: [HealthController],
 })
