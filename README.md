@@ -4,7 +4,7 @@ NestJS + GraphQL + Prisma 7 + PostgreSQL backend for the Glory Children Ministry
 
 ## Stack
 
-- NestJS 12
+- NestJS 11
 - GraphQL Code First with Apollo Server
 - Prisma ORM 7.10 + PostgreSQL driver adapter
 - PostgreSQL (Railway recommended for production)
@@ -254,7 +254,7 @@ npm run db:reset
 
 
 ## Dependency note
-This release uses the NestJS 12 dependency family. `@nestjs/config` is pinned to the Nest 12-compatible 12.x major. Do not use `--force` or `--legacy-peer-deps`.
+This release uses the NestJS 11 dependency family. `@nestjs/config` is pinned to the Nest 11-compatible 12.x major. Do not use `--force` or `--legacy-peer-deps`.
 
 If you previously extracted an older release, delete `node_modules` and `package-lock.json` before installing this release:
 
