@@ -23,12 +23,12 @@ export class MediaService {
 
     const safeFolder = folder === 'news' || folder === 'gallery' ? folder : 'uploads';
     const extension = ALLOWED_TYPES[file.mimetype];
-    const baseName = file.originalname.replace(/\\.[^/.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 70) || 'image';
+    const baseName = file.originalname.replace(/\.[^/.]+$/, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 70) || 'image';
     const fileName = `${Date.now()}-${randomUUID().slice(0, 8)}-${baseName}.${extension}`;
     const path = `public/images/uploads/${safeFolder}/${fileName}`;
     const encoded = file.buffer.toString('base64');
 
-    const response = await fetch(`https://api.github.com/repos/${repository}/contents/${githubPath}`, {
+    const response = await fetch(`https://api.github.com/repos/${repository}/contents/${path}`, {
       method: 'PUT',
       headers: {
         Accept: 'application/vnd.github+json',
