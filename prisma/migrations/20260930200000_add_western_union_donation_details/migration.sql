@@ -1,7 +1,7 @@
 ALTER TABLE "DonationMethod"
-  ADD COLUMN "country" TEXT,
-  ADD COLUMN "city" TEXT,
-  ADD COLUMN "contactNumber" TEXT;
+  ADD COLUMN IF NOT EXISTS "country" TEXT,
+  ADD COLUMN IF NOT EXISTS "city" TEXT,
+  ADD COLUMN IF NOT EXISTS "contactNumber" TEXT;
 
 INSERT INTO "DonationMethod" (
   "id", "name", "accountName", "accountNumber", "instructions",
