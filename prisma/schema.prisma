@@ -143,6 +143,9 @@ model DonationMethod {
   accountNumber String?
   instructions String?
   logoUrl       String?
+  country       String?
+  city          String?
+  contactNumber String?
   isActive      Boolean  @default(true)
   sortOrder     Int      @default(0)
   createdAt     DateTime @default(now())
