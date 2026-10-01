@@ -51,4 +51,5 @@ export class SubmissionSummary {
   @Field(() => Int) contacts!: number;
   @Field(() => Int) volunteers!: number;
   @Field(() => Int) subscribers!: number;
+  @Field(() => Int) sponsors!: number;
 }
