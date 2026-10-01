@@ -6,13 +6,30 @@ import {
   Req,
   UploadedFile,
   UseInterceptors,
+  UseFilters,
   UnauthorizedException,
+  Catch,
+  ExceptionFilter,
+  ArgumentsHost,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { MulterError } from 'multer';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { MediaService } from './media.service';
 import { AuthUser } from '../auth/auth.types';
+
+
+@Catch(MulterError)
+class MediaUploadExceptionFilter implements ExceptionFilter {
+  catch(exception: MulterError, host: ArgumentsHost) {
+    const response = host.switchToHttp().getResponse();
+    let message = exception.message || 'The image upload was rejected.';
+    if (exception.code === 'LIMIT_FILE_SIZE') message = 'Image must be 5 MB or smaller.';
+    if (exception.code === 'LIMIT_FILE_COUNT') message = 'Please upload only one image at a time.';
+    response.status(400).json({ statusCode: 400, message, error: 'Bad Request' });
+  }
+}
 
 @Controller('admin/media')
 export class MediaController {
@@ -46,6 +63,7 @@ export class MediaController {
   }
 
   @Post('upload')
+  @UseFilters(MediaUploadExceptionFilter)
   @UseInterceptors(
     FileInterceptor('file', {
       limits: {
