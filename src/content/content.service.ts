@@ -34,7 +34,7 @@ export class ContentService {
 
   news() { return this.prisma.newsArticle.findMany({ where: { published: true }, orderBy: { publishedAt: 'desc' } }); }
   allNews() { return this.prisma.newsArticle.findMany({ orderBy: { createdAt: 'desc' } }); }
-  createNews(input: NewsArticleInput) { return this.prisma.newsArticle.create({ data: { ...input, publishedAt: input.published ? new Date() : null } }); }
-  updateNews(id: string, input: NewsArticleInput) { return this.prisma.newsArticle.update({ where: { id }, data: { ...input, publishedAt: input.published ? new Date() : null } }); }
+  createNews(input: NewsArticleInput) { return this.prisma.newsArticle.create({ data: { ...input, category: input.category?.trim() || 'PROGRAMME UPDATE', publishedAt: input.published ? new Date() : null } }); }
+  updateNews(id: string, input: NewsArticleInput) { return this.prisma.newsArticle.update({ where: { id }, data: { ...input, category: input.category?.trim() || 'PROGRAMME UPDATE', publishedAt: input.published ? new Date() : null } }); }
   deleteNews(id: string) { return this.prisma.newsArticle.delete({ where: { id } }); }
 }
