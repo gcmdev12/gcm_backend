@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CauseInput, GalleryItemInput, ImpactStatisticInput, MediaAssetInput, NewsArticleInput } from './content.dto';
 
@@ -28,8 +28,42 @@ export class ContentService {
 
   gallery() { return this.prisma.galleryItem.findMany({ where: { isPublished: true }, orderBy: { sortOrder: 'asc' } }); }
   allGallery() { return this.prisma.galleryItem.findMany({ orderBy: { sortOrder: 'asc' } }); }
-  createGallery(input: GalleryItemInput) { return this.prisma.galleryItem.create({ data: input }); }
-  updateGallery(id: string, input: GalleryItemInput) { return this.prisma.galleryItem.update({ where: { id }, data: input }); }
+  createGallery(input: GalleryItemInput) {
+    const category = this.normalizeGalleryCategory(input.category);
+    return this.prisma.galleryItem.create({ data: { ...input, category } });
+  }
+
+  updateGallery(id: string, input: GalleryItemInput) {
+    const category = this.normalizeGalleryCategory(input.category);
+    return this.prisma.galleryItem.update({ where: { id }, data: { ...input, category } });
+  }
+
+  private normalizeGalleryCategory(value: string) {
+    const category = value.trim().toUpperCase();
+    const allowed = new Set([
+      'DAILY_LIFE_GROWTH',
+      'COMMUNITY_FELLOWSHIP',
+      'LEARNING_CREATIVITY',
+      'EVENTS_MILESTONES',
+      'OTHERS',
+      'EDUCATION',
+      'HEALTH',
+      'FOOD',
+      'GUIDANCE',
+      'SHELTER',
+      'SKILLS',
+      'EVENTS',
+      'OTHER',
+    ]);
+
+    if (!allowed.has(category)) {
+      throw new BadRequestException(
+        'Invalid gallery category. Please select a valid gallery category and try again.',
+      );
+    }
+
+    return category as GalleryItemInput['category'];
+  }
   deleteGallery(id: string) { return this.prisma.galleryItem.delete({ where: { id } }); }
 
   news() { return this.prisma.newsArticle.findMany({ where: { published: true }, orderBy: { publishedAt: 'desc' } }); }
