@@ -48,25 +48,11 @@ export class MediaController {
   @Post('upload')
   @UseInterceptors(
     FileInterceptor('file', {
-      limits: { fileSize: 5 * 1024 * 1024 },
-      fileFilter: (_req, file, callback) => {
-        const allowed = [
-          'image/jpeg',
-          'image/jpg',
-          'image/png',
-          'image/webp',
-          'image/gif',
-        ];
-
-        if (!allowed.includes(file.mimetype.toLowerCase())) {
-          return callback(
-            new BadRequestException(
-              'Unsupported image type. Please upload JPG, PNG, WEBP or GIF.',
-            ),
-            false,
-          );
-        }
-
+      limits: {
+        fileSize: 6 * 1024 * 1024,
+        files: 1,
+      },
+      fileFilter: (_req, _file, callback) => {
         callback(null, true);
       },
     }),
