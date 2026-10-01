@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { GalleryCategory } from '../generated/prisma/enums';
+import { Prisma } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 import { CauseInput, GalleryItemInput, ImpactStatisticInput, MediaAssetInput, NewsArticleInput } from './content.dto';
 
@@ -63,7 +63,7 @@ export class ContentService {
       );
     }
 
-    return category as GalleryCategory;
+    return category as Prisma.GalleryCategory;
   }
   deleteGallery(id: string) { return this.prisma.galleryItem.delete({ where: { id } }); }
 
