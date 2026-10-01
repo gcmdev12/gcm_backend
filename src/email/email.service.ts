@@ -67,6 +67,17 @@ export class EmailService {
     return this.layout('New Newsletter Subscriber', [['Name', data.name ?? 'Not provided'], ['Email', data.email]]);
   }
 
+  sponsorHtml(data: { name: string; email: string; phone?: string; location?: string; preferredContact?: string; message?: string }) {
+    return this.layout('New Sponsor a Child Enquiry', [
+      ['Name', data.name],
+      ['Email', data.email],
+      ['Phone', data.phone ?? 'Not provided'],
+      ['Location', data.location ?? 'Not provided'],
+      ['Preferred contact', data.preferredContact ?? 'Not provided'],
+      ['Message', data.message ?? 'Not provided'],
+    ]);
+  }
+
   private layout(title: string, rows: [string, string][]) {
     const body = rows.map(([label, value]) => `<tr><td style="padding:8px 12px;font-weight:700;vertical-align:top">${escapeHtml(label)}</td><td style="padding:8px 12px;white-space:pre-wrap">${escapeHtml(value)}</td></tr>`).join('');
     return `<div style="font-family:Arial,sans-serif;color:#24113f;max-width:700px;margin:auto"><h2 style="color:#6f2dbd">${escapeHtml(title)}</h2><table style="width:100%;border-collapse:collapse;border:1px solid #eee">${body}</table><p style="margin-top:24px;color:#666">Glory Children Ministry website notification</p></div>`;
