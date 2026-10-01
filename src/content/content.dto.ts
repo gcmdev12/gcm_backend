@@ -49,6 +49,7 @@ export class GalleryItemInput {
 export class NewsArticleInput {
   @Field() @IsString() title!: string;
   @Field() @IsString() slug!: string;
+  @Field({ nullable: true }) @IsOptional() @IsString() category?: string;
   @Field({ nullable: true }) @IsOptional() @IsString() excerpt?: string;
   @Field() @IsString() content!: string;
   @Field({ nullable: true }) @IsOptional() @IsString() imageUrl?: string;
@@ -59,4 +60,4 @@ export class NewsArticleInput {
 @ObjectType() export class ImpactGraph { @Field() id!: string; @Field() key!: string; @Field() label!: string; @Field() value!: string; @Field({ nullable: true }) description?: string; @Field(() => Int) sortOrder!: number; }
 @ObjectType() export class MediaGraph { @Field() id!: string; @Field() key!: string; @Field() page!: string; @Field() url!: string; @Field({ nullable: true }) title?: string; @Field({ nullable: true }) altText?: string; @Field({ nullable: true }) description?: string; }
 @ObjectType() export class GalleryGraph { @Field() id!: string; @Field() title!: string; @Field({ nullable: true }) description?: string; @Field() imageUrl!: string; @Field(() => GalleryCategory) category!: GalleryCategory; @Field() isPublished!: boolean; @Field(() => Int) sortOrder!: number; }
-@ObjectType() export class NewsGraph { @Field() id!: string; @Field() title!: string; @Field() slug!: string; @Field({ nullable: true }) excerpt?: string; @Field() content!: string; @Field({ nullable: true }) imageUrl?: string; @Field() published!: boolean; @Field({ nullable: true }) publishedAt?: Date; @Field() createdAt!: Date; }
+@ObjectType() export class NewsGraph { @Field() id!: string; @Field() title!: string; @Field() slug!: string; @Field() category!: string; @Field({ nullable: true }) excerpt?: string; @Field() content!: string; @Field({ nullable: true }) imageUrl?: string; @Field() published!: boolean; @Field({ nullable: true }) publishedAt?: Date; @Field() createdAt!: Date; }
