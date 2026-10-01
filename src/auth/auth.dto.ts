@@ -16,7 +16,7 @@ export class UpdateProfileInput {
 
 @InputType()
 export class ChangePasswordInput {
-  @Field() @IsString() @MinLength(8) currentPassword!: string;
+  @Field() @IsString() @MinLength(1) currentPassword!: string;
   @Field() @IsString() @MinLength(8) newPassword!: string;
 }
 
