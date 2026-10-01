@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { Prisma } from '../generated/prisma/client';
+import { GalleryCategory } from '../generated/prisma/enums';
 import { PrismaService } from '../prisma/prisma.service';
 import { CauseInput, GalleryItemInput, ImpactStatisticInput, MediaAssetInput, NewsArticleInput } from './content.dto';
 
@@ -40,7 +40,7 @@ export class ContentService {
   }
 
   private normalizeGalleryCategory(value: string) {
-    const category = value.trim().toUpperCase();
+    const category = value.trim().toUpperCase() as GalleryCategory;
     const allowed = new Set([
       'DAILY_LIFE_GROWTH',
       'COMMUNITY_FELLOWSHIP',
@@ -63,7 +63,7 @@ export class ContentService {
       );
     }
 
-    return category as Prisma.GalleryCategory;
+    return category;
   }
   deleteGallery(id: string) { return this.prisma.galleryItem.delete({ where: { id } }); }
 
