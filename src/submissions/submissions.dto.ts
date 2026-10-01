@@ -32,6 +32,16 @@ export class NewsletterInput {
 }
 
 @InputType()
+export class SponsorSubmissionInput {
+  @Field() @IsString() @MinLength(2) @MaxLength(120) name!: string;
+  @Field() @IsEmail() email!: string;
+  @Field({ nullable: true }) @IsOptional() @IsString() phone?: string;
+  @Field({ nullable: true }) @IsOptional() @IsString() location?: string;
+  @Field({ nullable: true }) @IsOptional() @IsString() preferredContact?: string;
+  @Field({ nullable: true }) @IsOptional() @IsString() @MaxLength(5000) message?: string;
+}
+
+@InputType()
 export class SubmissionStatusInput {
   @Field(() => SubmissionStatus) @IsEnum(SubmissionStatus) status!: SubmissionStatus;
 }
