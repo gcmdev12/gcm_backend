@@ -5,7 +5,7 @@ ALTER TABLE "DonationMethod"
 
 INSERT INTO "DonationMethod" (
   "id", "name", "accountName", "accountNumber", "instructions",
-  "country", "city", "contactNumber", "isActive", "sortOrder"
+  "country", "city", "contactNumber", "isActive", "sortOrder", "updatedAt"
 )
 SELECT
   'f4c7a7a0-0e55-4d0c-8e4e-6d7a7e0f4c01',
@@ -17,7 +17,8 @@ SELECT
   'Kampala',
   '+256755575982',
   true,
-  3
+  3,
+  CURRENT_TIMESTAMP
 WHERE NOT EXISTS (
   SELECT 1 FROM "DonationMethod"
   WHERE LOWER("name") = LOWER('Western Union')
