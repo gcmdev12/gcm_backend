@@ -211,6 +211,7 @@ model NewsArticle {
   id          String    @id @default(uuid())
   title       String
   slug        String    @unique
+  category    String    @default("PROGRAMME UPDATE")
   excerpt     String?
   content     String
   imageUrl    String?
