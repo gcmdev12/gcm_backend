@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EmailService } from '../email/email.service';
 import { PrismaService } from '../prisma/prisma.service';
-import { ContactSubmissionInput, NewsletterInput, VolunteerSubmissionInput } from './submissions.dto';
+import { ContactSubmissionInput, NewsletterInput, VolunteerSubmissionInput, SponsorSubmissionInput } from './submissions.dto';
 import { SubmissionStatus } from '../generated/prisma/enums';
 
 @Injectable()
@@ -20,6 +20,12 @@ export class SubmissionsService {
     return record;
   }
 
+  async createSponsor(input: SponsorSubmissionInput) {
+    const record = await this.prisma.sponsorSubmission.create({ data: input });
+    await this.email.notify('SPONSOR', `New Sponsor a Child Enquiry: ${input.name}`, this.email.sponsorHtml(input), input.email);
+    return record;
+  }
+
   async subscribe(input: NewsletterInput) {
     const email = input.email.toLowerCase();
     const record = await this.prisma.newsletterSubscriber.upsert({
@@ -33,10 +39,12 @@ export class SubmissionsService {
 
   listContacts(status?: SubmissionStatus) { return this.prisma.contactSubmission.findMany({ where: status ? { status } : undefined, orderBy: { createdAt: 'desc' } }); }
   listVolunteers(status?: SubmissionStatus) { return this.prisma.volunteerSubmission.findMany({ where: status ? { status } : undefined, orderBy: { createdAt: 'desc' } }); }
+  listSponsors(status?: SubmissionStatus) { return this.prisma.sponsorSubmission.findMany({ where: status ? { status } : undefined, orderBy: { createdAt: 'desc' } }); }
   listSubscribers(status?: SubmissionStatus) { return this.prisma.newsletterSubscriber.findMany({ where: status ? { status } : undefined, orderBy: { subscribedAt: 'desc' } }); }
 
   updateContactStatus(id: string, status: SubmissionStatus) { return this.prisma.contactSubmission.update({ where: { id }, data: { status } }); }
   updateVolunteerStatus(id: string, status: SubmissionStatus) { return this.prisma.volunteerSubmission.update({ where: { id }, data: { status } }); }
+  updateSponsorStatus(id: string, status: SubmissionStatus) { return this.prisma.sponsorSubmission.update({ where: { id }, data: { status } }); }
   updateSubscriberStatus(id: string, status: SubmissionStatus) { return this.prisma.newsletterSubscriber.update({ where: { id }, data: { status } }); }
 
   async summary() {
@@ -45,6 +53,7 @@ export class SubmissionsService {
       this.prisma.volunteerSubmission.count({ where: { status: SubmissionStatus.NEW } }),
       this.prisma.newsletterSubscriber.count({ where: { status: SubmissionStatus.NEW } }),
     ]);
-    return { contacts, volunteers, subscribers };
+    const sponsors = await this.prisma.sponsorSubmission.count({ where: { status: SubmissionStatus.NEW } });
+    return { contacts, volunteers, subscribers, sponsors };
   }
 }
