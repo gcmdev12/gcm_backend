@@ -91,6 +91,21 @@ model NewsletterSubscriber {
   @@index([status, subscribedAt])
 }
 
+model SponsorSubmission {
+  id                String           @id @default(uuid())
+  name              String
+  email             String
+  phone             String?
+  location          String?
+  preferredContact  String?
+  message           String?
+  status            SubmissionStatus @default(NEW)
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@index([status, createdAt])
+}
+
 model EmailNotificationLog {
   id           String   @id @default(uuid())
   type         String
