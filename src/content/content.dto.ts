@@ -39,7 +39,7 @@ export class MediaAssetInput {
 export class GalleryItemInput {
   @Field() @IsString() title!: string;
   @Field() @IsString() imageUrl!: string;
-  @Field(() => GalleryCategory) category!: GalleryCategory;
+  @Field() @IsString() category!: string;
   @Field({ nullable: true }) @IsOptional() @IsString() description?: string;
   @Field({ nullable: true, defaultValue: true }) @IsOptional() @IsBoolean() isPublished?: boolean;
   @Field(() => Int, { nullable: true }) @IsOptional() @IsInt() @Min(0) sortOrder?: number;
