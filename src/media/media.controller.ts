@@ -50,10 +50,14 @@ export class MediaController {
   @UseInterceptors(
     FileInterceptor('file', {
       limits: {
-        fileSize: 6 * 1024 * 1024,
+        fileSize: 5 * 1024 * 1024,
         files: 1,
       },
-      fileFilter: (_req, _file, callback) => {
+      fileFilter: (_req, file, callback) => {
+        const allowed = new Set(['image/jpeg', 'image/jpg', 'image/png']);
+        if (!allowed.has(file.mimetype.toLowerCase())) {
+          return callback(new BadRequestException('Only JPG and PNG images are allowed.') as any, false);
+        }
         callback(null, true);
       },
     }),
