@@ -6,8 +6,6 @@ const ALLOWED_TYPES: Record<string, string> = {
   'image/jpeg': 'jpg',
   'image/jpg': 'jpg',
   'image/png': 'png',
-  'image/webp': 'webp',
-  'image/gif': 'gif',
 };
 
 @Injectable()
@@ -20,7 +18,7 @@ export class MediaService {
     const extension = ALLOWED_TYPES[file.mimetype.toLowerCase()];
     if (!extension) {
       throw new BadRequestException(
-        `Unsupported image type "${file.mimetype}". Please use JPG, PNG, WEBP or GIF.`,
+        `Unsupported image type "${file.mimetype}". Please use JPG or PNG.`,
       );
     }
 
