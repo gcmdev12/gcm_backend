@@ -11,6 +11,7 @@ export class ContentService {
   allCauses() { return this.prisma.cause.findMany({ orderBy: { sortOrder: 'asc' } }); }
   createCause(input: CauseInput) { return this.prisma.cause.create({ data: input }); }
   updateCause(id: string, input: CauseInput) { return this.prisma.cause.update({ where: { id }, data: input }); }
+  updateCauseImage(id: string, imageUrl: string) { return this.prisma.cause.update({ where: { id }, data: { imageUrl } }); }
   deleteCause(id: string) { return this.prisma.cause.delete({ where: { id } }); }
 
   impacts() { return this.prisma.impactStatistic.findMany({ orderBy: { sortOrder: 'asc' } }); }
