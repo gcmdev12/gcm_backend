@@ -32,16 +32,16 @@ async function main() {
   });
 
   const causes = [
-    ['education', 'Education', 'Helping vulnerable children access quality education and the tools they need to learn, grow and build a brighter future.', 'GraduationCap', '#e83e8c'],
-    ['health', 'Health', 'Supporting children with access to medical care, health education, prevention and essential wellbeing services.', 'Stethoscope', '#2196f3'],
-    ['food', 'Food', 'Providing nutritious meals and food support so children can grow with dignity, strength and hope.', 'Utensils', '#f59e0b'],
-    ['guidance-counselling', 'Guidance & Counselling', 'Offering guidance, counselling, mentorship and emotional support that helps children navigate difficult circumstances.', 'Users', '#7c3aed'],
-    ['shelter-protection', 'Shelter & Protection', 'Working toward safe, protective environments where vulnerable children can be cared for, protected and supported.', 'Home', '#ef4444'],
-    ['skills-future', 'Skills & Future', 'Building practical skills, confidence and opportunities that prepare young people for sustainable futures.', 'Wrench', '#14b8a6'],
+    ['education', 'Education', 'Helping vulnerable children access quality education and the tools they need to learn, grow and build a brighter future.', 'GraduationCap', '#e83e8c', '/images/education.jpg'],
+    ['health', 'Health', 'Supporting children with access to medical care, health education, prevention and essential wellbeing services.', 'Stethoscope', '#2196f3', '/images/health.jpg'],
+    ['food', 'Food', 'Providing nutritious meals and food support so children can grow with dignity, strength and hope.', 'Utensils', '#f59e0b', '/images/food.jpg'],
+    ['guidance-counselling', 'Guidance & Counselling', 'Offering guidance, counselling, mentorship and emotional support that helps children navigate difficult circumstances.', 'Users', '#7c3aed', '/images/guidance.jpg'],
+    ['shelter-protection', 'Shelter & Protection', 'Working toward safe, protective environments where vulnerable children can be cared for, protected and supported.', 'Home', '#ef4444', '/images/shelter.jpg'],
+    ['skills-future', 'Skills & Future', 'Building practical skills, confidence and opportunities that prepare young people for sustainable futures.', 'Wrench', '#14b8a6', '/images/skills.jpg'],
   ];
   for (let i = 0; i < causes.length; i++) {
-    const [slug, name, description, icon, color] = causes[i];
-    await prisma.cause.upsert({ where: { slug }, update: { name, description, icon, color, sortOrder: i }, create: { slug, name, description, icon, color, sortOrder: i } });
+    const [slug, name, description, icon, color, imageUrl] = causes[i];
+    await prisma.cause.upsert({ where: { slug }, update: { name, description, icon, color, imageUrl, sortOrder: i }, create: { slug, name, description, icon, color, imageUrl, sortOrder: i } });
   }
 
   const stats = [
