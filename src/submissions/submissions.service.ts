@@ -11,18 +11,21 @@ export class SubmissionsService {
   async createContact(input: ContactSubmissionInput) {
     const record = await this.prisma.contactSubmission.create({ data: input });
     await this.email.notify('CONTACT', `New Contact Submission: ${input.subject || input.name}`, this.email.contactHtml(input), input.email);
+    await this.email.confirmSubmission('CONTACT', input.email, 'We received your message | Glory Children Ministry', this.email.contactConfirmationHtml(input.name));
     return record;
   }
 
   async createVolunteer(input: VolunteerSubmissionInput) {
     const record = await this.prisma.volunteerSubmission.create({ data: input });
     await this.email.notify('VOLUNTEER', `New Volunteer Application: ${input.name}`, this.email.volunteerHtml(input), input.email);
+    await this.email.confirmSubmission('VOLUNTEER', input.email, 'Thank you for volunteering | Glory Children Ministry', this.email.volunteerConfirmationHtml(input.name));
     return record;
   }
 
   async createSponsor(input: SponsorSubmissionInput) {
     const record = await this.prisma.sponsorSubmission.create({ data: input });
     await this.email.notify('SPONSOR', `New Sponsor a Child Enquiry: ${input.name}`, this.email.sponsorHtml(input), input.email);
+    await this.email.confirmSubmission('SPONSOR', input.email, 'We received your sponsorship enquiry | Glory Children Ministry', this.email.sponsorConfirmationHtml(input.name));
     return record;
   }
 
@@ -34,6 +37,7 @@ export class SubmissionsService {
       create: { email, name: input.name },
     });
     await this.email.notify('NEWSLETTER', `New Newsletter Subscriber: ${email}`, this.email.newsletterHtml({ ...input, email }), email);
+    await this.email.confirmSubmission('NEWSLETTER', email, 'You are subscribed | Glory Children Ministry', this.email.newsletterConfirmationHtml(input.name));
     return record;
   }
 
