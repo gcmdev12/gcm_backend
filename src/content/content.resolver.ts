@@ -100,6 +100,15 @@ export class ContentResolver {
 
   @UseGuards(GqlAuthGuard)
   @Mutation(() => CauseGraph)
+  updateCauseImage(
+    @Args('id', { type: () => String }) id: string,
+    @Args('imageUrl', { type: () => String }) imageUrl: string,
+  ) {
+    return this.service.updateCauseImage(id, imageUrl);
+  }
+
+  @UseGuards(GqlAuthGuard)
+  @Mutation(() => CauseGraph)
   deleteCause(
     @Args('id', { type: () => String })
     id: string,
